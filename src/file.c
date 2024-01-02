@@ -73,3 +73,37 @@ string read_line(helper_file *f)
   return str;
 }
 
+helper_file h_write_file(const char *path)
+{
+  helper_file result;
+
+  result.fp = fopen(path, "w");
+
+  string n = create_string(path);
+  result.name = get_filename(n);
+  free_string(&n);
+
+  result.success = true;
+
+  return result;
+}
+
+void write_string(helper_file *f, string str)
+{
+  fprintf(f->fp, "%s", str.characters);
+}
+
+void write_chars(helper_file *f, char *data)
+{
+  fprintf(f->fp, "%s", data);
+}
+
+void write_line(helper_file *f, string ln)
+{
+  fprintf(f->fp, "%s\n", ln.characters);
+}
+
+bool is_eof(helper_file f)
+{
+  return feof(f.fp);
+}
