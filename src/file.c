@@ -1,9 +1,14 @@
 #include <file.h>
 
-// Opens a file
-helper_file h_open_file(const char *path)
+/**
+ * @brief Opens a file and allows you to read it
+ * 
+ * @param path Path to file 
+ * @return h_file 
+ */
+h_file h_open_file(const char *path)
 {
-  helper_file result;
+  h_file result;
 
   result.fp = fopen(path, "r");
 
@@ -15,7 +20,7 @@ helper_file h_open_file(const char *path)
     fclose(result.fp);
     return result;
   }
-    string f_n = create_string(path);
+    string f_n = create_string((char*)path);
     result.name = get_filename(f_n);
     free_string(&f_n);
 
@@ -24,12 +29,23 @@ helper_file h_open_file(const char *path)
   return result;
 }
 
-void h_close_file(helper_file *f)
+/**
+ * @brief Closes and cleans up memory of the file 
+ * 
+ * @param f A pointer to the h_file 
+ */
+void h_close_file(h_file *f)
 {
   free_string(&f->name);
   fclose(f->fp);
 }
 
+/**
+ * @brief Get the filename object
+ * 
+ * @param path Path to file you want to extract the file from
+ * @return string
+ */
 string get_filename(string path)
 {
   // First find last slash position
@@ -45,7 +61,14 @@ string get_filename(string path)
   }
 }
 
-string read_characters(helper_file *f, int number)
+/**
+ * @brief Reads a certain number of characters from a file 
+ * 
+ * @param f A pointer to the file 
+ * @param number The number of characters you want to read
+ * @return string 
+ */
+string read_characters(h_file *f, int number)
 {
   char data[number + 1];
 
@@ -57,10 +80,15 @@ string read_characters(helper_file *f, int number)
   return create_string(data);
 }
 
-// NOTE: 500 characters is the imposed limit at the moment
-// This also automatically removes the new line chracter
-string read_line(helper_file *f)
+/**
+ * @brief Reads 1 line from a file 
+ * 
+ * @param f A pointer to the file 
+ * @return string 
+ */
+string read_line(h_file *f)
 {
+  // NOTE - This means that we are limited to 500 characters per line
   char data[500];
 
   fgets(data, 500, f->fp);
@@ -73,13 +101,19 @@ string read_line(helper_file *f)
   return str;
 }
 
-helper_file h_write_file(const char *path)
+/**
+ * @brief Opens a file and allow you to write to it 
+ * 
+ * @param path Path to file 
+ * @return h_file 
+ */
+h_file h_write_file(const char *path)
 {
-  helper_file result;
+  h_file result;
 
   result.fp = fopen(path, "w");
 
-  string n = create_string(path);
+  string n = create_string((char*)path);
   result.name = get_filename(n);
   free_string(&n);
 
@@ -88,22 +122,47 @@ helper_file h_write_file(const char *path)
   return result;
 }
 
-void write_string(helper_file *f, string str)
+/**
+ * @brief Writes a string to the file
+ * 
+ * @param f A pointer to the file 
+ * @param str The data you would like to write to
+ */
+void write_string(h_file *f, string str)
 {
   fprintf(f->fp, "%s", str.characters);
 }
 
-void write_chars(helper_file *f, char *data)
+/**
+ * @brief Writes a c string to the file, this is sometimes better because with string, you need to free the memory after 
+ * 
+ * @param f A pointer to the file 
+ * @param data The data you would like to write to
+ */
+void write_chars(h_file *f, char *data)
 {
   fprintf(f->fp, "%s", data);
 }
 
-void write_line(helper_file *f, string ln)
+/**
+ * @brief Write a stirng to the file with a \n 
+ * 
+ * @param f A pointer to the file 
+ * @param ln The data you would like to write without a \n
+ */
+void write_line(h_file *f, string ln)
 {
   fprintf(f->fp, "%s\n", ln.characters);
 }
 
-bool is_eof(helper_file f)
+/**
+ * @brief Indicates if the file has been read completely or not 
+ * 
+ * @param f A pointer to the file 
+ * @return true/
+ * @return false 
+ */
+bool is_eof(h_file f)
 {
   return feof(f.fp);
 }

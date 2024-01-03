@@ -7,7 +7,7 @@
 int main()
 { 
   // Reading text
-  helper_file input = h_open_file("examples/data/read_me.txt");
+  h_file input = h_open_file("examples/data/read_me.txt");
 
   // Read the line and print it out to the screen
   while (!is_eof(input))
@@ -22,7 +22,7 @@ int main()
   h_close_file(&input);
 
   // Writing and saving text
-  helper_file output = h_write_file("examples/data/out.txt");
+  h_file output = h_write_file("examples/data/out.txt");
 
   /*
     Writing can be done in two ways
