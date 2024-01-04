@@ -92,7 +92,7 @@ string read_line(h_file *f)
   char data[500];
 
   fgets(data, 500, f->fp);
-  
+
   string str = create_string(data);
 
   if (find_char('\n', str) != -1)
