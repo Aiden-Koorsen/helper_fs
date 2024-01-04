@@ -212,6 +212,7 @@ void delete_characters(string *orignal, int index, int count)
   strcpy(orignal->characters, before.characters);
   strcpy(orignal->characters + before.length, after.characters);
   orignal->characters[before.length + after.length] = '\0';
+  orignal->length = strlen(orignal->characters);
 
   free_string(&before);
   free_string(&after);

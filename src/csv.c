@@ -20,10 +20,6 @@ h_csv h_open_csv(const char *path)
     return result;
   }
 
-  string f_n = create_string((char*)path);
-  result.name = get_filename(f_n);
-  free_string(&f_n);
-
   result.success = true;
   return result;
 }

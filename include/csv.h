@@ -38,7 +38,6 @@ void free_csv_row(csv_row *r);
 typedef struct
 {
   h_file f;
-  string name;
   bool success;
 }h_csv;
 
