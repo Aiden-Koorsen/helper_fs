@@ -41,7 +41,9 @@ string read_line(h_file *f);
 bool is_eof(h_file f);
 
 void write_string(h_file *f, string str);
+
 void write_line(h_file *f, string ln);
 void write_chars(h_file *f, char *data);
+void write_char(h_file *f, char c);
 
 #endif

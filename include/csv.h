@@ -25,6 +25,7 @@ typedef struct
   int count;
 } csv_row;
 
+csv_row create_new_row(int count, string *data);
 void free_csv_row(csv_row *r);
 
 /**
@@ -42,8 +43,10 @@ typedef struct
 }h_csv;
 
 h_csv h_open_csv(const char *path);
+h_csv h_write_csv(const char *path);
 void h_close_csv(h_csv *f);
 
 csv_row get_row(h_csv *f);
+void write_row(h_csv *f, csv_row new_row);
 
 #endif

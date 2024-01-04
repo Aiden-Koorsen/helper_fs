@@ -40,6 +40,7 @@ int compare_strings(string str1, string str2);
 
 string copy(string src);
 string copy_n(string src, int index, int count);
+string add_strings(string str1, string str2);
 
 void delete_characters(string *orignal, int index, int count);
 

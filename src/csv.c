@@ -36,7 +36,6 @@ h_csv h_open_csv(const char *path)
 void h_close_csv(h_csv *f)
 {
   h_close_file(&f->f);
-  free_string(&f->name); 
 }
 
 /**
@@ -93,9 +92,31 @@ csv_row get_row(h_csv *f)
 }
 
 /**
+ * @brief Create a CSV Row
+ * 
+ * @param count The amount of columns
+ * @param data An array with the same count as the count argument that contains the values
+ * @return csv_row 
+ */
+csv_row create_new_row(int count, string *data)
+{
+  csv_row result;
+
+  result.count = count;
+  result.data = malloc(sizeof(string) * count);
+
+  for (int i = 0; i < count; i++)
+  {
+    result.data[i] = copy(data[i]);
+  }
+
+  return result;
+}
+
+/**
  * @brief Frees all memory that is used by a row 
  * 
- * @param r 
+ * @param r A pointer to the row
  */
 void free_csv_row(csv_row *r)
 {
@@ -104,4 +125,38 @@ void free_csv_row(csv_row *r)
     free_string(&r->data[i]);
 
   free(r->data);
+}
+
+/**
+ * @brief Opens and allows you to write to a CSV File
+ * 
+ * @param path Path to the file 
+ * @return h_csv 
+ */
+h_csv h_write_csv(const char *path)
+{
+  h_csv result;
+
+  result.f = h_write_file(path);
+  result.success = result.f.success;
+  return result;
+}
+
+/**
+ * @brief Writes a row to a CSV file
+ * 
+ * @param f Pointer to the CSV File 
+ * @param new_row The new row you would like to add
+ */
+void write_row(h_csv *f, csv_row new_row)
+{
+  for (int i = 0; i < new_row.count; i++)
+  {
+    write_string(&f->f, new_row.data[i]);
+    if (i != new_row.count - 1)
+    {
+      write_char(&f->f,',');
+    }
+  }
+  write_char(&f->f,'\n');
 }

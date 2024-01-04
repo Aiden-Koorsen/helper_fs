@@ -11,9 +11,10 @@ string create_string(char *c_str)
   string result;
 
   result.length = strlen(c_str);
-  result.characters = malloc(result.length);
+  result.characters = malloc(result.length + 1);
 
   strcpy(result.characters, c_str);
+  result.characters[result.length] = '\0';
 
   if (result.characters == NULL)
   {
@@ -137,9 +138,10 @@ string copy(string src)
 {
   string result;
   result.length = src.length;
-  result.characters = malloc(src.length);
+  result.characters = malloc(src.length + 1);
 
   strcpy(result.characters, src.characters);
+  result.characters[result.length] = '\0';
 
   if (result.characters == NULL)
     printf("String Error: Couldn't copy string\n");
@@ -213,4 +215,24 @@ void delete_characters(string *orignal, int index, int count)
 
   free_string(&before);
   free_string(&after);
+}
+
+/**
+ * @brief Adds two strings together and returns the result 
+ * 
+ * @param str1 First string  
+ * @param str2 Second string
+ * @return string 
+ */
+string add_strings(string str1, string str2)
+{
+  string result;
+
+  result.characters = malloc(str1.length + str2.length + 1);
+
+  strcpy(result.characters, str1.characters);
+  strcpy(result.characters + str1.length, str2.characters);
+  result.characters[str1.length + str2.length] = '\0';
+
+  return result;
 }

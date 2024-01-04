@@ -145,6 +145,17 @@ void write_chars(h_file *f, char *data)
 }
 
 /**
+ * @brief Writes a single character to a file
+ * 
+ * @param f The pointer to the file 
+ * @param c The character you would like to write
+ */
+void write_char(h_file *f, char c)
+{
+  putc(c, f->fp);
+}
+
+/**
  * @brief Write a stirng to the file with a \n 
  * 
  * @param f A pointer to the file 
